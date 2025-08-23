@@ -3,6 +3,7 @@ import 'package:flutter_movie_app/utils/text.dart';
 import 'package:flutter_movie_app/widgets/toprated.dart';
 import 'package:flutter_movie_app/widgets/trending.dart';
 import 'package:flutter_movie_app/widgets/tv.dart';
+import 'package:flutter_movie_app/widgets/upcoming.dart';
 import 'package:tmdb_api/tmdb_api.dart';
 
 void main() => runApp(new MyApp());
@@ -30,6 +31,10 @@ class _HomeState extends State<Home> {
   List trendingmovies = [];
   List topratedmovies = [];
   List tv = [];
+  List upcoming = [];
+  List searchmovies = [];
+
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
@@ -49,14 +54,32 @@ class _HomeState extends State<Home> {
     Map trendingresult = await tmdbWithCustomLogs.v3.trending.getTrending();
     Map topratedresult = await tmdbWithCustomLogs.v3.movies.getTopRated();
     Map tvresult = await tmdbWithCustomLogs.v3.tv.getPopular();
+    Map upcomingresult = await tmdbWithCustomLogs.v3.movies.getUpcoming();
     print((trendingresult));
     setState(() {
       trendingmovies = trendingresult['results'];
       topratedmovies = topratedresult['results'];
       tv = tvresult['results'];
+      upcoming = upcomingresult['results'];
     });
   }
 
+  /// 🔎 Search function
+  searchMovie(String query) async {
+    if (query.isEmpty) {
+      setState(() => searchmovies = []);
+      return;
+    }
+
+    TMDB tmdbWithCustomLogs = TMDB(ApiKeys(apikey, readaccesstoken));
+
+    Map searchresult =
+    await tmdbWithCustomLogs.v3.search.queryMovies(query);
+
+    setState(() {
+      searchmovies = searchresult['results'];
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,6 +90,73 @@ class _HomeState extends State<Home> {
         ),
         body: ListView(
           children: [
+            // 🔹 Search Box
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: TextField(
+                controller: _searchController,
+                onChanged: (value) => searchMovie(value),
+                style: TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  hintText: "Search movies...",
+                  hintStyle: TextStyle(color: Colors.grey),
+                  prefixIcon: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Image.asset(
+                      "assets/search_icon.png",
+                      width: 20,
+                      height: 20,
+                      color: Colors.white,
+                    ),
+                  ),
+                  filled: true,
+                  fillColor: Color(0xFF1A223A),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
+              ),
+            ),
+
+            // 🔹 Show search results if available
+            if (searchmovies.isNotEmpty)
+              Container(
+                height: 270,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: searchmovies.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      width: 140,
+                      margin: EdgeInsets.symmetric(horizontal: 6),
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 200,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              image: DecorationImage(
+                                image: NetworkImage(
+                                  'https://image.tmdb.org/t/p/w500${searchmovies[index]['poster_path']}',
+                                ),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 5),
+                          Text(
+                            searchmovies[index]['title'] ?? 'No Title',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
             TV(tv: tv),
             TrendingMovies(
               trending: trendingmovies,
@@ -74,6 +164,7 @@ class _HomeState extends State<Home> {
             TopRatedMovies(
               toprated: topratedmovies,
             ),
+            UpcomingMovies(upcoming: upcoming),
           ],
         ));
   }

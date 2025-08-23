@@ -46,10 +46,12 @@ class TV extends StatelessWidget {
                           description: tv[index]['overview'] ?? '',
                           vote: tv[index]['vote_average']?.toString() ?? '0',
                           launch_on: tv[index]['first_air_date'] ?? 'Unknown',
+                          // cast: tv[index]['cast'] ?? [],
                         ),
                       ),
                     );
                   },
+
                   child: Container(
                     padding: EdgeInsets.all(5),
                     width: 250,

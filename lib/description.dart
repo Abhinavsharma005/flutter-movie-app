@@ -170,4 +170,3 @@ class Description extends StatelessWidget {
     );
   }
 }
-

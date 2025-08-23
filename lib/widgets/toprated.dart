@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_movie_app/utils/text.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../description.dart'; // ✅ import description page
+import '../description.dart';
 
 class TopRatedMovies extends StatelessWidget {
   final List toprated;
@@ -51,10 +51,12 @@ class TopRatedMovies extends StatelessWidget {
                           description: toprated[index]['overview'] ?? '',
                           vote: toprated[index]['vote_average']?.toString() ?? '0',
                           launch_on: toprated[index]['release_date'] ?? 'Unknown',
+                          // cast: toprated[index]['cast'] ?? [],
                         ),
                       ),
                     );
                   },
+
                   child: Container(
                     width: 140,
                     child: Column(
