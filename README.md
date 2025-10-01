@@ -1,17 +1,31 @@
-🎬 flutter_movie_app
+# 🎬 Flutter Movie App  
 
-Key Features:
+A beautiful **movie browsing app** built with Flutter & Dart, integrated with TMDB API for real-time movie data.  
 
-🔗 Integrated with TMDB API
+---
 
-🎥 Browse Trending, Top Rated, Upcoming Movies, and TV Shows
+## 🚀 Key Features  
+- 🔗 **TMDB API Integration** – fetch trending, top rated, and upcoming movies/TV shows  
+- 🎥 **Browse Categories** – Trending, Top Rated, Upcoming, and TV Shows  
+- ⚡ **Smooth Swiping** – clean and stylish UI with fluid gestures  
+- 🔍 **Search Functionality** – quickly find any movie  
+- 📄 **Movie Details Page** – description, release date, rating, and play button  
+- 📲 **Flutter Widgets** – built for a seamless user experience  
 
-⚡ Smooth swiping with clean and stylish UI design
+---
 
-🔍 Search bar to quickly find any movie
+## 🎥 Demo Video  
+👉 [Watch on LinkedIn](https://www.linkedin.com/posts/abhinav-sharma-314319327_flutter-dart-movieapp-activity-7366051340466167809-DqmY?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFJzY4ABokuOV1bS8C6y6y1n7ErKmfl6koU)  
 
-📄 On tap, view a short description, release date, rating, and play button
+---
 
-📲 Built with Flutter’s widget system for a fluid and engaging experience
+## 🛠️ Tech Stack  
+- **Flutter**  
+- **Dart**  
+- **TMDB API**  
 
-watch a demo video on Linkedin: https://www.linkedin.com/posts/abhinav-sharma-314319327_flutter-dart-movieapp-activity-7366051340466167809-DqmY?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFJzY4ABokuOV1bS8C6y6y1n7ErKmfl6koU
+---
+
+## ✨ Author  
+👨‍💻 Abhinav Sharma  
+
